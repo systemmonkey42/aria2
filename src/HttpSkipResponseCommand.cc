@@ -222,6 +222,7 @@ bool HttpSkipResponseCommand::processResponse()
                          error_code::RESOURCE_NOT_FOUND);
     case 502:
     case 503:
+    case 429:
       // Only retry if pretry-wait > 0. Hammering 'busy' server is not
       // a good idea.
       if (getOption()->getAsInt(PREF_RETRY_WAIT) > 0) {
