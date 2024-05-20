@@ -9,9 +9,11 @@
 
 if grep -q docker /proc/self/cgroup; then
 
-    apk add ca-certificates gnutls-dev expat-dev sqlite-dev c-ares-dev make sed gcc g++ libc-dev
+    apk add ca-certificates gnutls-dev expat-dev sqlite-dev c-ares-dev make sed gcc g++ libc-dev autoconf automake gettext-dev libtool
 
     ln -s /bin/sed /usr/bin/sed
+
+    autoreconf -if
 
     ./configure \
         --prefix=/usr \
@@ -24,6 +26,7 @@ if grep -q docker /proc/self/cgroup; then
 
     make -j12
 
+    mkdir -p /tmp/install
     make install DESTDIR=/tmp/install
     tar cvf aria2c.tar.gz -C /tmp/install .
 
